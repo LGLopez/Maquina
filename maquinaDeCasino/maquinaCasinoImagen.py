@@ -22,23 +22,16 @@
 # button = tk.Button(root, text='Stop', width=25, command=root.destroy)
 # button.pack()
 # root.mainloop()
-import threading
+
 import random
+import  time
 from tkinter import *
 from PIL import ImageTk, Image
 
 counter = 0
 
-
-def tryFinish():
-    timer.cancel()
-
-
-timer = threading.Timer(3.0, tryFinish)
-
-
 def counter_label():
-
+    start = time.time()
     img = ImageTk.PhotoImage(Image.open("michi1.png"))
     img2 = ImageTk.PhotoImage(Image.open("michi2.png"))
     img3 = ImageTk.PhotoImage(Image.open("michi3.png"))
@@ -55,8 +48,6 @@ def counter_label():
     label2.grid(row=2, column=2)
     label3.grid(row=2, column=4)
 
-    timer.start()
-
     def count():
         global counter
         counter += 1
@@ -68,7 +59,7 @@ def counter_label():
         label2.config(image=photos2[counter])
         label3.config(image=photos3[counter])
 
-        if timer.is_alive():
+        if time.time() - start < 3:
             label.after(200, count)
         else:
             randNum = random.randint(0,2)
