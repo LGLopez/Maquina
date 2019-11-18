@@ -9,6 +9,10 @@ conteo = [0, 0, 0, 0, 0]
 counter = 0
 creditsToPlay = 0
 
+randNum = random.randint(0, 2)
+randNum2 = random.randint(0, 2)
+randNum3 = random.randint(0, 2)
+
 def create_window():
     window = Toplevel(root)
 
@@ -44,29 +48,34 @@ def create_window():
         label3.grid(row=5, column=4)
 
         def count():
+            global randNum
+            global randNum2
+            global randNum3
             global counter
             counter += 1
 
             if counter == 3:
                 counter = 0
 
-            label.config(image=photos[counter])
-            label2.config(image=photos2[counter])
-            label3.config(image=photos3[counter])
+            if time.time() - start < 1:
+                #label.config(image=photos[counter])
+                randNum = random.randint(0, 2)
+                label.config(image=photos[randNum])
+            if time.time() - start < 2:
+                #label2.config(image=photos[counter])
+                randNum2 = random.randint(0, 2)
+                label2.config(image=photos[randNum2])
+            if time.time() - start < 3:
+                #label3.config(image=photos[counter])
+                randNum3 = random.randint(0, 2)
+                label3.config(image=photos[randNum3])
+
             global creditsToPlay
             if creditsToPlay > 6:
                 if time.time() - start < 3:
                     label.after(200, count)
                 else:
                     creditsToPlay -= 7
-
-                    randNum = random.randint(0, 2)
-                    randNum2 = random.randint(0, 2)
-                    randNum3 = random.randint(0, 2)
-
-                    label.config(image=photos[randNum])
-                    label2.config(image=photos[randNum2])
-                    label3.config(image=photos[randNum3])
 
                     if randNum == randNum2 and randNum == randNum3 and randNum3 == randNum2:
                         messagebox.showinfo("GANASTE!", "Ganaste 100 creditos", parent = window)
@@ -244,7 +253,7 @@ while rows < 50:
 toPrint = str(creditsToPlay)
 Label(root, text="Creditos " + toPrint).grid(row=2, column=49)
 
-Button(root, text="Juego", command=check_credits).grid(row=0, column=2)
+Button(root, text="Juego", command=check_credits).grid(row=0, column=10)
 Button(root, text="1", command=add_credits_1).grid(row=3, column = 4)
 Button(root, text="2", command=add_credits_2).grid(row=3, column = 6)
 Button(root, text="5", command=add_credits_5).grid(row=3, column = 8)
@@ -270,8 +279,8 @@ Label(root, text="10").grid(row = 21, column = 10)
 Label(root, text="5").grid(row = 21, column = 8)
 Label(root, text="2").grid(row = 21, column = 6)
 
-Button(root, text="Sacar dinero", command = greedy_algorithm).grid(row = 10, column = 2)
+Button(root, text="Sacar dinero", command = greedy_algorithm).grid(row = 10, column = 16)
 
-Button(root, text = "Salir", command = confirmation).grid(row =49, column = 48)
+Button(root, text = "Salir", command = confirmation).grid(row =49, column = 49)
 
 root.mainloop()
